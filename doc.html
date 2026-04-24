@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация | MIREA Français</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Lucida Grande', Tahoma, Arial, sans-serif;
+            background: #f5f6f8;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Шапка как в Doxygen */
+        .header {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0f1a24 100%);
+            color: #e8eef2;
+            padding: 20px 30px;
+            border-bottom: 4px solid #4a90e2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header h1 small {
+            font-size: 14px;
+            color: #8ba0b0;
+            font-weight: normal;
+            margin-left: 15px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #b8cadc;
+        }
+
+        /* Контейнер для документации */
+        .doc-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* Боковое меню (оглавление) */
+        .sidebar {
+            width: 280px;
+            background: #fafbfc;
+            border-right: 1px solid #e1e4e8;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar .nav-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #6a737d;
+            padding: 12px 20px 6px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 20px 8px 28px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: #eef2f7;
+            border-left-color: #4a90e2;
+            color: #1a5fa6;
+        }
+
+        .sidebar .level2 {
+            padding-left: 40px;
+            font-size: 13px;
+            color: #586069;
+        }
+
+        /* Основной контент */
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+            overflow-x: auto;
+        }
+
+        /* Стили как у Doxygen */
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e1e4e8;
+            color: #1a2a3a;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eaecef;
+            color: #2c3e50;
+        }
+
+        .subsubtitle {
+            font-size: 18px;
+            margin: 20px 0 12px 0;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .class-decl {
+            background: #f6f8fa;
+            border-left: 4px solid #4a90e2;
+            padding: 14px 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-radius: 6px;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .param-table th {
+            background: #f1f3f5;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .param-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eaecef;
+            vertical-align: top;
+        }
+
+        .param-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        .note {
+            background: #e8f0fe;
+            border-left: 4px solid #4a90e2;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .warning {
+            background: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 12px 18px;
+            margin: 15px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #0366d6;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: monospace;
+            margin-right: 6px;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e4e8;
+            text-align: center;
+            font-size: 13px;
+            color: #6a737d;
+        }
+
+        @media (max-width: 768px) {
+            .doc-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid #e1e4e8;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📘 MIREA Français <small>v1.0.0 — Документация разработчика</small></h1>
+    <p>Интерактивная платформа для изучения французского языка | Семестры 3,4 | Telegram Web App + LocalStorage</p>
+</div>
+
+<div class="doc-container">
+    <div class="sidebar">
+        <div class="nav-title">📌 Содержание</div>
+        <ul>
+            <li><a href="#overview">▸ Обзор проекта</a></li>
+            <li><a href="#structure">▸ Структура файлов</a></li>
+            <li><a href="#html-ui">▸ HTML / UI компоненты</a></li>
+            <li><a href="#css-styles">▸ CSS стили (темы, кнопки)</a></li>
+            <li><a href="#js-global">▸ Глобальный объект app</a>
+                <ul>
+                    <li><a href="#properties" class="level2">▪ Свойства</a></li>
+                    <li><a href="#navigation" class="level2">▪ Навигация</a></li>
+                    <li><a href="#progress" class="level2">▪ Управление прогрессом</a></li>
+                    <li><a href="#exercises" class="level2">▪ Типы упражнений</a></li>
+                    <li><a href="#methods" class="level2">▪ Ключевые методы</a></li>
+                </ul>
+            </li>
+            <li><a href="#api-endpoints">▸ API / Загрузка файлов</a></li>
+            <li><a href="#storage">▸ LocalStorage (формат данных)</a></li>
+            <li><a href="#telegram">▸ Telegram Web App интеграция</a></li>
+            <li><a href="#examples">▸ Примеры использования</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <!-- ОБЗОР -->
+        <section id="overview">
+            <div class="title">📖 Обзор проекта</div>
+            <p><strong>MIREA Français</strong> — веб-приложение для самостоятельного изучения французского языка, разработанное для студентов РТУ МИРЭА. Поддерживает упражнения для 3 и 4 семестров, включает интерактивные задания на порядок слов, ввод слов для разблокировки, кастомные кнопки (true/false, варианты a/b/c/d). Реализовано сохранение прогресса выполнения упражнений, адаптировано под Telegram WebView.</p>
+            <div class="note">
+                <strong>🎯 Основные возможности:</strong><br>
+                – Модульная система (7 модулей в семестре)<br>
+                – Разделённые упражнения (части 1..N)<br>
+                – Автосохранение прогресса через LocalStorage<br>
+                – Поддержка ссылок в описании упражнений<br>
+                – Два типа заданий: "собери порядок слов" и "введи слово для разблокировки"
+            </div>
+        </section>
+
+        <!-- СТРУКТУРА -->
+        <section id="structure">
+            <div class="subtitle">🗂️ Структура файлов проекта</div>
+            <div class="code-block">
+                mirea-francais/<br>
+                ├── index.html          # Главная разметка (контейнеры, кнопки)<br>
+                ├── css/<br>
+                │   └── style.css       # Стили: градиенты, адаптив, анимации<br>
+                └── js/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;└── app.js           # Основная логика (контроллер)
+            </div>
+            <p>Файлы упражнений подгружаются динамически с сервера: <br>
+            <code>https://mireafrancaisbot.ru/api/exercise/{Semester}/{module}.{exercise}[часть].txt</code><br>
+            Файлы ответов имеют суффикс <code>A</code> (например <code>1.5A.txt</code>), содержат правильную последовательность через запятую.</p>
+        </section>
+
+        <!-- HTML / UI -->
+        <section id="html-ui">
+            <div class="subtitle">🖥️ HTML-компоненты (основные секции)</div>
+            <table class="param-table">
+                <tr><th>ID / Селектор</th><th>Назначение</th><th>По умолчанию</th></tr>
+                <tr><td><span class="tag">#main-menu</span></td><td>Главное меню выбора семестра</td><td>visible</td></tr>
+                <tr><td><span class="tag">#module-menu</span></td><td>Список модулей (1-7)</td><td>hidden</td></tr>
+                <tr><td><span class="tag">#exercise-menu</span></td><td>Список упражнений модуля</td><td>hidden</td></tr>
+                <tr><td><span class="tag">#exercise-content</span></td><td>Область выполнения упражнения</td><td>hidden</td></tr>
+                <tr><td><span class="tag">.btn</span></td><td>Базовый класс кнопки с градиентом</td><td>—</td></tr>
+                <tr><td><span class="tag">.exercise-container</span></td><td>Контейнер для текста упражнения</td><td>—</td></tr>
+            </table>
+            <div class="note">
+                <strong>Навигационные кнопки:</strong> <code>btn-back</code>, <code>btn-nav</code>, <code>btn-remove</code>.
+            </div>
+        </section>
+
+        <!-- CSS стили -->
+        <section id="css-styles">
+            <div class="subtitle">🎨 CSS стили</div>
+            <p>Основные темы и декорации:</p>
+            <ul>
+                <li><span class="tag">body</span> — градиентный фон <code>#667eea → #764ba2</code>.</li>
+                <li><span class="tag">.container</span> — белая карточка, скругление 20px, тень.</li>
+                <li><span class="tag">.btn</span> — синий градиент, hover‑эффект трансформации.</li>
+                <li><span class="tag">.btn-textbook</span> — зелёный градиент (учебники).</li>
+                <li><span class="tag">.success-message</span> — зелёная всплывашка с анимацией fadeIn.</li>
+                <li>Адаптив: <code>@media (min-width: 480px)</code> для горизонтальных кнопок.</li>
+            </ul>
+        </section>
+
+        <!-- Глобальный объект app -->
+        <section id="js-global">
+            <div class="subtitle">📦 Глобальный объект <code>app</code></div>
+            <div class="class-decl">
+                const app = {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;// ---------- Свойства состояния ----------<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;currentSemester: 'Sem3'|'Sem4',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;currentModule: number,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;currentExercise: number,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;currentPart: number|null,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;selectedWords: string[],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;unlockedWords: string[],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;exercisesProgress: object,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                }
+            </div>
+
+            <div id="properties" class="subsubtitle">🔷 Свойства (краткий перечень)</div>
+            <table class="param-table">
+                <tr><th>Имя</th><th>Тип</th><th>Описание</th></tr>
+                <tr><td>currentSemester</td><td>string</td><td>'Sem3' или 'Sem4'</td></tr>
+                <tr><td>selectedWords</td><td>Array&lt;string&gt;</td><td>Слова/ответы, выбранные пользователем в текущем упражнении</td></tr>
+                <tr><td>correctOrder</td><td>Array&lt;string&gt;</td><td>Правильная последовательность из файла ответов</td></tr>
+                <tr><td>unlockedWords</td><td>Array&lt;string&gt;</td><td>Слова, разблокированные в input-упражнениях</td></tr>
+                <tr><td>allWords</td><td>Array&lt;string&gt;</td><td>Все уникальные слова для текущего упражнения (из correctOrder)</td></tr>
+                <tr><td>splitExercises</td><td>Object</td><td>Конфиг многокомпонентных упражнений: <code>{"Sem4.4.2":{parts:4}}</code></td></tr>
+                <tr><td>STORAGE_KEY</td><td>string</td><td>'mirea_exercises_progress'</td></tr>
+            </table>
+
+            <div id="navigation" class="subsubtitle">🧭 Навигационные методы</div>
+            <table class="param-table">
+                <tr><th>Метод</th><th>Аргументы</th><th>Действие</th></tr>
+                <tr><td>showSemester</td><td>semester</td><td>Показать модули выбранного семестра, сгенерировать кнопки модулей</td></tr>
+                <tr><td>showModule</td><td>moduleNumber</td><td>Показать список упражнений внутри модуля (с учётом splitExercises)</td></tr>
+                <tr><td>showExercise</td><td>exercise, part=null</td><td>Загрузить текстовое описание и ответы, подготовить UI (input/кнопки)</td></tr>
+                <tr><td>navigateToNextExercise</td><td>—</td><td>Автоматический переход к след. упражнению/части, сохраняя прогресс</td></tr>
+                <tr><td>navigateToPrevExercise</td><td>—</td><td>Переход к предыдущему упражнению</td></tr>
+            </table>
+
+            <div id="progress" class="subsubtitle">💾 Управление прогрессом (LocalStorage)</div>
+            <table class="param-table">
+                <tr><th>Метод</th><th>Описание</th></tr>
+                <tr><td>loadProgress()</td><td>Читает из localStorage, инициализирует exercisesProgress</td></tr>
+                <tr><td>saveCurrentProgress()</td><td>Сохраняет выбранные слова, unlockedWords, allWords, isCustomExercise и метку времени</td></tr>
+                <tr><td>loadCurrentProgress() → boolean</td><td>Восстанавливает состояние упражнения при повторном открытии</td></tr>
+                <tr><td>clearCurrentProgress()</td><td>Удаляет запись после успешного выполнения упражнения</td></tr>
+            </table>
+            <div class="code-block">
+                // Формат ключа: "Sem3_1_5_part2" или "Sem4_2_3"
+                {
+                  "Sem3_2_8": {
+                    selectedWords: ["ordinateur", "clavier"],
+                    unlockedWords: ["souris"],
+                    correctOrder: ["souris", "clavier"],
+                    isInputExercise: true,
+                    lastUpdated: "2025-01-15T..."
+                  }
+                }
+            </div>
+        </section>
+
+        <section id="exercises">
+            <div class="subsubtitle">⚙️ Типы упражнений и распознавание</div>
+            <p><span class="tag">checkIfCustomExercise()</span> — возвращает true для упражнений с предопределёнными кнопками (например, 'v'/'f', варианты a-d, технические термины). Используется жёсткий перечень упражнений:<br>
+            <code>Sem3.1.5, Sem3.3.5, Sem4.1.3</code> и т.д.</p>
+            <p><span class="tag">checkIfInputExercise()</span> — true для упражнений, где требуется вводить слова для разблокировки (лексические задания). Список: Sem3.1.9, Sem3.2.8, Sem4.2.5 ...</p>
+            <p><span class="tag">setupInputExercise()</span> — отображает поле ввода, счётчик разблокированных слов, динамические кнопки из разблокированных слов. Метод <code>checkWordInput()</code> нормализует ввод (сравнение по сортированным символам, без учёта дефисов/апострофов).</p>
+        </section>
+
+        <section id="methods">
+            <div class="subsubtitle">📌 Ключевые методы (с сигнатурами)</div>
+            <table class="param-table">
+                <tr><th>Метод</th><th>Параметры</th><th>Возвращает</th><th>Описание</th></tr>
+                <tr><td>loadExerciseDescription</td><td>hasProgress: boolean</td><td>Promise&lt;void&gt;</td><td>Загружает текст упражнения, затем параллельно подгружает ответы, настраивает UI в зависимости от типа</td></tr>
+                <tr><td>checkAnswer</td><td>—</td><td>void</td><td>Сравнивает selectedWords.join(',') с correctOrder.join(','), выводит сообщение и очищает прогресс</td></tr>
+                <tr><td>checkWordInput</td><td>—</td><td>void</td><td>Считывает поле ввода, нормализует, ищет среди allWords, добавляет в unlockedWords, обновляет кнопки</td></tr>
+                <tr><td>normalizeWordForMatching</td><td>word: string</td><td>string</td><td>Убирает пробелы, '-', "'", сортирует буквы — для нечёткого сравнения</td></tr>
+                <tr><td>makeLinksClickable</td><td>text: string</td><td>string</td><td>Заменяет URL на &lt;a target="_blank"&gt;</td></tr>
+                <tr><td>getModuleExerciseCount</td><td>semester, module</td><td>number</td><td>Возвращает количество упражнений в модуле (хардкод таблицы)</td></tr>
+            </table>
+        </section>
+
+        <!-- API endpoints -->
+        <section id="api-endpoints">
+            <div class="subtitle">🌐 Загрузка файлов упражнений</div>
+            <div class="code-block">
+                GET https://mireafrancaisbot.ru/api/exercise/Sem3/1.5.txt        → описание упражнения<br>
+                GET https://mireafrancaisbot.ru/api/exercise/Sem3/1.5A.txt       → правильный порядок слов (через запятую)<br>
+                GET https://mireafrancaisbot.ru/api/exercise/Sem4/4.22.txt       → для частей (упр 4.2 часть 2)
+            </div>
+            <p>Файлы ответов опциональны. Если отсутствуют, упражнение считается без проверки (только чтение). В приложении также поддерживаются ссылки на учебники через Google Drive.</p>
+        </section>
+
+        <!-- Storage -->
+        <section id="storage">
+            <div class="subtitle">💽 LocalStorage: детальный формат</div>
+            <div class="code-block">
+                // Ключ строится: `${currentSemester}_${currentModule}_${currentExercise}_part${currentPart}`<br>
+                // Пример записи:<br>
+                {
+                  "Sem4_5_3": {
+                    selectedWords: ["v", "f", "v"],
+                    correctOrder: ["v", "v", "f"],
+                    unlockedWords: [],
+                    allWords: [],
+                    isCustomExercise: true,
+                    isInputExercise: false,
+                    lastUpdated: "2025-04-24T10:30:00Z"
+                  }
+                }
+            </div>
+            <div class="note">Прогресс очищается только после успешного выполнения упражнения (вызов clearCurrentProgress).</div>
+        </section>
+
+        <!-- Telegram -->
+        <section id="telegram">
+            <div class="subtitle">📱 Интеграция с Telegram Web App</div>
+            <p>При инициализации проверяется наличие глобального объекта <code>Telegram</code>. Вызываются методы:</p>
+            <div class="code-block">
+                if (typeof Telegram !== 'undefined') {
+                    Telegram.WebApp.ready();    // сообщает, что приложение загружено
+                    Telegram.WebApp.expand();   // растягивает мини-апп на весь экран
+                }
+            </div>
+            <p>Это позволяет корректно работать внутри Telegram-бота, скрывая стандартные отступы.</p>
+        </section>
+
+        <!-- Examples -->
+        <section id="examples">
+            <div class="subtitle">🧪 Примеры использования методов</div>
+            <div class="subsubtitle">Пример: настройка кастомных кнопок для Sem3.1.5</div>
+            <div class="code-block">
+                // внутри setupCustomButtons: если exerciseKey === 'Sem3.1.5' → ['v', 'f']<br>
+                buttons.forEach(btnText => {<br>
+                &nbsp;&nbsp;const btn = createButton(btnText);<br>
+                &nbsp;&nbsp;btn.onclick = () => app.selectWord(btnText);<br>
+                });
+            </div>
+            <div class="subsubtitle">Пример: проверка ответа (правильная последовательность)</div>
+            <div class="code-block">
+                // correctOrder из файла 1.5A.txt: "Bonjour,je,m'appelle"<br>
+                // Пользователь выбрал: ["Bonjour","je","m'appelle"] → checkAnswer() → успех
+            </div>
+            <div class="warning">
+                <strong>Важно:</strong> При input-упражнении сравнение слов происходит через нормализацию (сортировка букв), поэтому "l'écran" и "lécran" считаются совпадающими.
+            </div>
+        </section>
+
+        <footer>
+            Документация сгенерирована для внутреннего использования.<br>
+            © 2026 MIREA Français — модуль обучения французскому языку. Актуальная версия: 1.0.0
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>
